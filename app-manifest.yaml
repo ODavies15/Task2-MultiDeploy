@@ -22,4 +22,7 @@ spec:
       image: odavies15/task2-app # Dockerhub
       env:
       - name: MYSQL_ROOT_PASSWORD
-        value: Password123
+        valueFrom:
+          secretKeyRef:
+            name: db-root-password
+            key: password
