@@ -43,7 +43,7 @@ pipeline {
                 kubectl apply -f db-manifest.yaml
                 kubectl apply -f app-manifest.yaml
                 kubectl apply -f nginx-config.yaml
-                kubectl apply nginx-pod.yaml
+                kubectl apply -f nginx-pod.yaml
                 sleep 60
                 kubectl get services
                 '''
