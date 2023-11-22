@@ -2,7 +2,7 @@ pipeline {
 
     agent any
     environment {
-        YOUR_NAME = credentials("YOUR_NAME")
+        MYSQL_ROOT_PASSWORD = credentials("MYSQL_ROOT_PASSWORD")
     }
     stages {
 
@@ -39,7 +39,11 @@ pipeline {
             steps {
 
                 sh '''
-                kubectl apply -f .
+                sed -e 's,{{password}},'${MYSQL_ROOT_PASSWORD}',g;' db-password.yaml | kubectl apply -f -
+                kubectl apply -f db-manifest.yaml
+                kubectl apply -f app-manifest.yaml
+                kubectl apply -f nginx-config.yaml
+                kubectl apply nginx-pod.yaml
                 sleep 60
                 kubectl get services
                 '''
